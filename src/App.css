@@ -6,6 +6,12 @@
   background-color: black;
 }
 
+* {
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 .AppContents {
   position: absolute;
   top: 0;
