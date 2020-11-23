@@ -1,0 +1,19 @@
+.Message {
+  margin: 5px;
+  font-size: 40px;
+}
+.ErrorMessage > span {
+  background-color: red;
+}
+
+.PromptMessage > span {
+  background-color: yellow;
+}
+
+.SuccessMessage > span {
+  background-color: lightgreen;
+}
+
+.NeutralMessage > span {
+  background-color: burlywood;
+}
