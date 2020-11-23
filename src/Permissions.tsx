@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useStore } from './Store';
-import { ErrorMessage, SuccessMessage as PromptMessage } from './Messages';
+import { ErrorMessage, PromptMessage } from './Messages';
+import { Button } from './Button';
 
 export const Permissions = (): React.ReactElement => {
-  const isUserStreamOn = useStore((state) => state.isUserStreamOn);
+  const isUserStreamOn = useStore((state) => !!state.streams);
   const setStreams = useStore((state) => state.setStreams);
 
   const [uiState, setUiState] = useState<
@@ -46,7 +47,7 @@ export const Permissions = (): React.ReactElement => {
         }
       ></PromptMessage>
 
-      <button onClick={getStreams}>Enable Webcam & Audio</button>
+      <Button onClick={getStreams}>Enable Webcam & Audio</Button>
 
       {uiState === 'accepted' && <PromptMessage text={'Devices connected!'}></PromptMessage>}
       {uiState === 'errorAudio' && <ErrorMessage reason={'Could not get microphone.'} />}
