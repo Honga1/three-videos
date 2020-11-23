@@ -1,0 +1,10 @@
+.UserUi {
+  position: absolute;
+  background-color: burlywood;
+  left: 50%;
+  top: 50%;
+  width: 60%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border-radius: 10px;
+}
