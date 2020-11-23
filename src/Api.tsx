@@ -1,0 +1,88 @@
+import React, { useEffect, useState } from 'react';
+import { Button } from './Button';
+import { SuccessMessage, ErrorMessage, NeutralMessage, PromptMessage } from './Messages';
+import { useStore } from './Store';
+
+export const Api = (): React.ReactElement => {
+  const audioSource = useStore((state) => state.staticVideos?.middle);
+  const destinationVideo = useStore((state) => state.recordings?.video);
+  const resultVideo = useStore((state) => state.fakedRecording);
+
+  const setFakedRecording = useStore((state) => state.setFakedRecording);
+
+  const [uiState, setUiState] = useState<
+    | 'awaitingAudioSource'
+    | 'awaitingDestinationVideo'
+    | 'prompt'
+    | 'awaitingResult'
+    | 'success'
+    | 'errorApi'
+    | 'errorSources'
+  >(
+    audioSource === undefined
+      ? 'awaitingAudioSource'
+      : destinationVideo === undefined
+      ? 'awaitingDestinationVideo'
+      : !!resultVideo
+      ? 'success'
+      : 'prompt',
+  );
+
+  useEffect(() => {
+    const uiState =
+      audioSource === undefined
+        ? 'awaitingAudioSource'
+        : destinationVideo === undefined
+        ? 'awaitingDestinationVideo'
+        : !!resultVideo
+        ? 'success'
+        : 'prompt';
+
+    setUiState(uiState);
+  }, [audioSource, destinationVideo, resultVideo]);
+
+  const sendToApi = async () => {
+    if (!audioSource || !destinationVideo) {
+      console.error(
+        `Not all sources are ready. source: ${audioSource}, destination: ${destinationVideo})`,
+      );
+      setUiState('errorSources');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', destinationVideo.blob);
+    formData.append('sound', audioSource);
+
+    try {
+      setUiState('awaitingResult');
+      const response = await fetch('http://localhost:3000/three_videos_demo', {
+        method: 'POST',
+        body: formData,
+        mode: 'cors',
+      });
+
+      const video = await response.blob();
+      setUiState('success');
+      setFakedRecording(video);
+    } catch (error) {
+      setUiState('errorApi');
+      console.error(error);
+    }
+  };
+
+  return (
+    <div className="Api">
+      {uiState === 'awaitingAudioSource' && <NeutralMessage text="Awaiting audio source" />}
+      {uiState === 'awaitingDestinationVideo' && (
+        <NeutralMessage text="Awaiting destination video" />
+      )}
+      {uiState === 'prompt' && <PromptMessage text="Source and Destination ready to be faked" />}
+      {!uiState.includes('awaiting') && <Button onClick={sendToApi}>Send to API</Button>}
+      {uiState === 'awaitingResult' && <NeutralMessage text="Waiting for Api response" />}
+      {uiState === 'success' && <SuccessMessage text="Got faked recording from Api" />}
+      {uiState === 'errorApi' && <ErrorMessage reason="Could not fetch from Api" />}
+      {uiState === 'errorSources' && <ErrorMessage reason="Souces are not ready" />}
+    </div>
+  );
+};
