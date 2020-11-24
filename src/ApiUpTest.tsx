@@ -39,7 +39,7 @@ export const ApiUpTest = ({ apiUrl }: { apiUrl: string }): React.ReactElement =>
       controller = new AbortController();
       signal = controller.signal;
       await testApi();
-    }, 1000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [testApi]);
