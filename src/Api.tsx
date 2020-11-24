@@ -7,6 +7,7 @@ export const Api = ({ apiUrl }: { apiUrl: string }): React.ReactElement => {
   const audioSource = useStore((state) => state.staticVideos?.middle);
   const destinationVideo = useStore((state) => state.recordings?.video);
   const resultVideo = useStore((state) => state.fakedRecording);
+  const webcamScale = useStore((state) => state.config.webcamScale);
 
   const setFakedRecording = useStore((state) => state.setFakedRecording);
 
@@ -53,6 +54,7 @@ export const Api = ({ apiUrl }: { apiUrl: string }): React.ReactElement => {
     const formData = new FormData();
     formData.append('image', destinationVideo.blob);
     formData.append('sound', audioSource);
+    formData.append('webcamScale', webcamScale.toFixed(0));
 
     try {
       setUiState('awaitingResult');

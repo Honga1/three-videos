@@ -20,6 +20,7 @@ type State = {
   config: {
     recordingDuration: number;
     apiUrl: string;
+    webcamScale: number;
   };
   setStreams: (streams: Streams) => void;
   closeStreams: () => void;
@@ -42,7 +43,7 @@ const initialState: NonFunctionProperties<State> = {
   fakedRecording: undefined,
   staticVideos: undefined,
   isPlaybackReady: false,
-  config: { recordingDuration: 3, apiUrl: 'http://localhost:9000' },
+  config: { recordingDuration: 3, apiUrl: 'http://localhost:9000', webcamScale: 2 },
 };
 
 export const store = create<State>((set, get) => ({
