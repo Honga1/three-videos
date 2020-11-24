@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ErrorMessage, NeutralMessage as SuccessMessage } from './ui/Messages';
+import { ErrorMessage, NeutralMessage, SuccessMessage } from './ui/Messages';
 import { useStore } from './Store';
 
 import videoSrcStart from './videos/1.mp4';
@@ -36,8 +36,8 @@ export const StaticVideoLoader = (): React.ReactElement => {
 
   return (
     <div className="StaticFileLoader">
-      {uiState === 'notLoaded' && <SuccessMessage text="Files not loaded" />}
-      {uiState === 'loading' && <SuccessMessage text="Files loading" />}
+      {uiState === 'notLoaded' && <NeutralMessage text="Files not loaded" />}
+      {uiState === 'loading' && <NeutralMessage text="Files loading" />}
       {uiState === 'loaded' && <SuccessMessage text="Files loaded!" />}
       {uiState === 'error' && <ErrorMessage reason="Files could not load" />}
     </div>
