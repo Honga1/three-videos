@@ -1,0 +1,28 @@
+.Input {
+  background-color: mediumturquoise;
+  color: white;
+  margin: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  font-size: 40px;
+  border: none;
+}
+
+.Label {
+  width: 100%;
+}
+
+.Label > span {
+  background-color: mediumturquoise;
+  background-color: burlywood;
+  margin: 5px;
+  font-size: 40px;
+  border: none;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.Input:hover {
+  background-color: blue;
+}
