@@ -1,6 +1,8 @@
 .Message {
   margin: 5px;
   font-size: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .ErrorMessage > span {
   background-color: red;
