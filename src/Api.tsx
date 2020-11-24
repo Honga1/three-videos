@@ -4,7 +4,7 @@ import { SuccessMessage, ErrorMessage, NeutralMessage, PromptMessage } from './u
 import { useStore } from './Store';
 
 export const Api = ({ apiUrl }: { apiUrl: string }): React.ReactElement => {
-  const audioSource = useStore((state) => state.staticVideos?.middle);
+  const audioSource = useStore((state) => state.staticFiles?.middle);
   const destinationVideo = useStore((state) => state.recordings?.video);
   const resultVideo = useStore((state) => state.fakedRecording);
   const webcamScale = useStore((state) => state.config.webcamScale);

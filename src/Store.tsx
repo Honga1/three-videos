@@ -13,7 +13,7 @@ interface Streams {
 
 type State = {
   streams: Streams | undefined;
-  staticVideos: { start: Blob; middle: Blob; end: Blob } | undefined;
+  staticFiles: { start: Blob; middle: Blob; end: Blob } | undefined;
   recordings: { video?: Recording; audio?: Recording };
   fakedRecording: Blob | undefined;
   fakedRecordingPromise: Promise<Blob> | undefined;
@@ -26,7 +26,7 @@ type State = {
   setStreams: (streams: Streams) => void;
   closeStreams: () => void;
   setVideoRecording: (recording: Recording) => void;
-  setStaticVideos: (start: Blob, middle: Blob, end: Blob) => void;
+  setStaticFiles: (start: Blob, middle: Blob, end: Blob) => void;
   setFakedRecording: (video: Blob) => void;
   setFakedRecordingPromise: (videoPromise: Promise<Blob>) => void;
   setPlaybackReadiness: (isReady: boolean) => void;
@@ -44,7 +44,7 @@ const initialState: NonFunctionProperties<State> = {
   recordings: {},
   fakedRecording: undefined,
   fakedRecordingPromise: undefined,
-  staticVideos: undefined,
+  staticFiles: undefined,
   isPlaybackReady: false,
   config: { recordingDuration: 3, apiUrl: 'http://localhost:9000', webcamScale: 2 },
 };
@@ -86,8 +86,8 @@ export const store = create<State>((set, get) => ({
   setVideoRecording: (recording) => {
     set({ recordings: { video: recording } });
   },
-  setStaticVideos: (start, middle, end) => {
-    set({ staticVideos: { start, middle, end } });
+  setStaticFiles: (start, middle, end) => {
+    set({ staticFiles: { start, middle, end } });
   },
   setFakedRecording: (video) => {
     set({ fakedRecording: video });

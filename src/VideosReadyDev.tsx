@@ -3,7 +3,7 @@ import { ErrorMessage, SuccessMessage } from './ui/Messages';
 import { useStore } from './Store';
 
 export const VideosReadyDev = (): React.ReactElement => {
-  const maybeStaticVideos = useStore((state) => state.staticVideos);
+  const maybeStaticVideos = useStore((state) => state.staticFiles);
   const maybeFakeRecordingPromise = useStore((state) => state.fakedRecordingPromise);
   const setPlaybackReadiness = useStore((state) => state.setPlaybackReadiness);
 
