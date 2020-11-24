@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useStore } from './Store';
-import { ErrorMessage, PromptMessage } from './Messages';
-import { Button } from './Button';
+import { ErrorMessage, PromptMessage } from './ui/Messages';
+import { Button } from './ui/Button';
 
 export const Permissions = (): React.ReactElement => {
   const isUserStreamOn = useStore((state) => !!state.streams);

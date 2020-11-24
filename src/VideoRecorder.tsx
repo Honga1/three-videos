@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Button } from './Button';
-import { NeutralMessage, PromptMessage } from './Messages';
+import { Button } from './ui/Button';
+import { NeutralMessage, PromptMessage } from './ui/Messages';
 import { useStore } from './Store';
 
 type Props = {

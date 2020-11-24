@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from './Button';
-import { SuccessMessage, ErrorMessage, NeutralMessage, PromptMessage } from './Messages';
+import { Button } from './ui/Button';
+import { SuccessMessage, ErrorMessage, NeutralMessage, PromptMessage } from './ui/Messages';
 import { useStore } from './Store';
 
 export const Api = ({ apiUrl }: { apiUrl: string }): React.ReactElement => {

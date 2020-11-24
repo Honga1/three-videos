@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ErrorMessage, NeutralMessage as SuccessMessage } from './Messages';
+import { ErrorMessage, NeutralMessage as SuccessMessage } from './ui/Messages';
 import { useStore } from './Store';
 
 import videoSrcStart from './videos/1.mp4';

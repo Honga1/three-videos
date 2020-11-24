@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Permissions } from './Permissions';
 import { useStore } from './Store';
 import { VideoRecorder } from './VideoRecorder';
-import { VideoStreamPreview } from './VideoStreamPreview';
+import { VideoStreamPreview } from './ui/VideoStreamPreview';
 
 import './UserUi.css';
 

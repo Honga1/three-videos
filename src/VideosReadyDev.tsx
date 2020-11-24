@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ErrorMessage, SuccessMessage } from './Messages';
+import { ErrorMessage, SuccessMessage } from './ui/Messages';
 import { useStore } from './Store';
 
 export const VideosReadyDev = (): React.ReactElement => {

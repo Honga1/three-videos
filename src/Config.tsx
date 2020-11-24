@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement } from 'react';
-import { LabelledInput } from './LabelledInput';
+import { LabelledInput } from './ui/LabelledInput';
 import { store } from './Store';
 
 export const Config = (): ReactElement => {

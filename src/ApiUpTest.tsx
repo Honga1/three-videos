@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { SuccessMessage, ErrorMessage, NeutralMessage } from './Messages';
+import { SuccessMessage, ErrorMessage, NeutralMessage } from './ui/Messages';
 
 let controller = new AbortController();
 let signal = controller.signal;
