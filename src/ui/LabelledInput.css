@@ -26,3 +26,10 @@
 .Input:hover {
   background-color: blue;
 }
+
+.Input:active {
+  background-color: lightblue;
+}
+.Input:focus {
+  background-color: lightblue;
+}
