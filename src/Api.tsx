@@ -3,7 +3,7 @@ import { Button } from './Button';
 import { SuccessMessage, ErrorMessage, NeutralMessage, PromptMessage } from './Messages';
 import { useStore } from './Store';
 
-export const Api = (): React.ReactElement => {
+export const Api = ({ apiUrl }: { apiUrl: string }): React.ReactElement => {
   const audioSource = useStore((state) => state.staticVideos?.middle);
   const destinationVideo = useStore((state) => state.recordings?.video);
   const resultVideo = useStore((state) => state.fakedRecording);
@@ -56,7 +56,7 @@ export const Api = (): React.ReactElement => {
 
     try {
       setUiState('awaitingResult');
-      const response = await fetch('http://localhost:3000/three_videos_demo', {
+      const response = await fetch(apiUrl + '/three_videos_demo', {
         method: 'POST',
         body: formData,
         mode: 'cors',
