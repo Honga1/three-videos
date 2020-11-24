@@ -6,7 +6,8 @@ import './DevUi.css';
 import { VideosReadyDev } from './VideosReadyDev';
 import { ApiUpTest } from './ApiUpTest';
 import { Config } from './Config';
-import { useStore } from './Store';
+import { store, useStore } from './Store';
+import { Button } from './ui/Button';
 
 export const DevUi = (): ReactElement => {
   const apiUrl = useStore((state) => state.config.apiUrl);
@@ -17,6 +18,7 @@ export const DevUi = (): ReactElement => {
       <ApiUpTest apiUrl={apiUrl} />
       <Api apiUrl={apiUrl} />
       <VideosReadyDev />
+      <Button onClick={store.getState().resetState}>Reset State</Button>
     </div>
   );
 };
