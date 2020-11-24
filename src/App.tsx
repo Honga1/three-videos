@@ -1,23 +1,23 @@
 import React from 'react';
 import './App.css';
+import { AsyncVideos } from './AsyncVideos';
 import { DevUi } from './DevUi';
-import { SequentialVideos } from './SequentialVideos';
 import { useStore } from './Store';
 import { UserUi } from './UserUi';
 
 function App(): React.ReactElement {
   const staticVideos = useStore((state) => state.staticVideos);
-  const fakedRecording = useStore((state) => state.fakedRecording);
+  const fakedRecordingPromise = useStore((state) => state.fakedRecordingPromise);
 
   return (
     <div className="App">
       <div className="AppContents">
         <UserUi />
         <DevUi />
-        {!!staticVideos && !!fakedRecording && (
-          <SequentialVideos
+        {!!staticVideos && !!fakedRecordingPromise && (
+          <AsyncVideos
             start={staticVideos.start}
-            middle={fakedRecording}
+            middle={fakedRecordingPromise}
             end={staticVideos.end}
           />
         )}

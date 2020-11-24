@@ -16,6 +16,7 @@ type State = {
   staticVideos: { start: Blob; middle: Blob; end: Blob } | undefined;
   recordings: { video?: Recording; audio?: Recording };
   fakedRecording: Blob | undefined;
+  fakedRecordingPromise: Promise<Blob> | undefined;
   isPlaybackReady: boolean;
   config: {
     recordingDuration: number;
@@ -27,6 +28,7 @@ type State = {
   setVideoRecording: (recording: Recording) => void;
   setStaticVideos: (start: Blob, middle: Blob, end: Blob) => void;
   setFakedRecording: (video: Blob) => void;
+  setFakedRecordingPromise: (videoPromise: Promise<Blob>) => void;
   setPlaybackReadiness: (isReady: boolean) => void;
   resetState: () => void;
 };
@@ -41,6 +43,7 @@ const initialState: NonFunctionProperties<State> = {
   streams: undefined,
   recordings: {},
   fakedRecording: undefined,
+  fakedRecordingPromise: undefined,
   staticVideos: undefined,
   isPlaybackReady: false,
   config: { recordingDuration: 3, apiUrl: 'http://localhost:9000', webcamScale: 2 },
@@ -90,10 +93,14 @@ export const store = create<State>((set, get) => ({
     set({ fakedRecording: video });
   },
 
+  setFakedRecordingPromise: (videoPromise) => {
+    set({ fakedRecordingPromise: videoPromise });
+  },
+
   setPlaybackReadiness: (isReady: boolean) => set({ isPlaybackReady: isReady }),
   resetState: () => {
-    const { config } = get();
-    set({ ...initialState, ...config });
+    const config = { ...get().config };
+    set({ ...initialState, config: { ...config } });
   },
 }));
 

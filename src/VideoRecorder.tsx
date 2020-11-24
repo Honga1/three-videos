@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Button } from './ui/Button';
-import { NeutralMessage, PromptMessage } from './ui/Messages';
+import { NeutralMessage, PromptMessage, SuccessMessage } from './ui/Messages';
 import { useStore } from './Store';
 
 type Props = {
@@ -59,7 +59,7 @@ export const VideoRecorder = ({ stream, duration }: Props): React.ReactElement =
       {uiState === 'recording' && (
         <NeutralMessage text={`Recoding for another: ${timeRemaining}s`}></NeutralMessage>
       )}
-      {uiState === 'recorded' && <NeutralMessage text={`Trained!`}></NeutralMessage>}
+      {uiState === 'recorded' && <SuccessMessage text={`Trained!`}></SuccessMessage>}
       {uiState !== 'recording' && <Button onClick={recordVideo}>Record Video</Button>}
     </div>
   );

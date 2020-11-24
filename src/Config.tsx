@@ -5,6 +5,8 @@ import { LabelledSelect } from './ui/LabelledSelect';
 
 export const Config = (): ReactElement => {
   const webcamScale = useStore((state) => state.config.webcamScale);
+  const recordingDuration = useStore((state) => state.config.recordingDuration);
+  const apiUrl = useStore((state) => state.config.apiUrl);
   const onDurationChange = (event: ChangeEvent<HTMLInputElement>) => {
     const config = store.getState().config;
     const recordingDuration = parseInt(event.target.value, 10);
@@ -33,7 +35,7 @@ export const Config = (): ReactElement => {
         type="number"
         min={0}
         max={16}
-        defaultValue={store.getState().config.recordingDuration}
+        value={recordingDuration}
         onChange={onDurationChange}
       ></LabelledInput>
 
@@ -41,7 +43,7 @@ export const Config = (): ReactElement => {
         label="API Url:"
         name="apiUrl"
         type="string"
-        defaultValue={store.getState().config.apiUrl}
+        value={apiUrl}
         onChange={onApiUrlChange}
       ></LabelledInput>
 

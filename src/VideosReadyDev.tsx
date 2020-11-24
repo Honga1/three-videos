@@ -4,21 +4,21 @@ import { useStore } from './Store';
 
 export const VideosReadyDev = (): React.ReactElement => {
   const maybeStaticVideos = useStore((state) => state.staticVideos);
-  const maybeFakeRecording = useStore((state) => state.fakedRecording);
+  const maybeFakeRecordingPromise = useStore((state) => state.fakedRecordingPromise);
   const setPlaybackReadiness = useStore((state) => state.setPlaybackReadiness);
 
   useEffect(() => {
-    if (!maybeStaticVideos || !maybeFakeRecording) {
+    if (!maybeStaticVideos || !maybeFakeRecordingPromise) {
       setPlaybackReadiness(false);
     } else {
       setPlaybackReadiness(true);
     }
-  }, [maybeFakeRecording, maybeStaticVideos, setPlaybackReadiness]);
+  }, [maybeFakeRecordingPromise, maybeStaticVideos, setPlaybackReadiness]);
 
   if (!maybeStaticVideos) {
     return <ErrorMessage reason="Static videos not loaded"></ErrorMessage>;
   }
-  if (!maybeFakeRecording) {
+  if (!maybeFakeRecordingPromise) {
     return <ErrorMessage reason="Fake recording not received"></ErrorMessage>;
   }
 

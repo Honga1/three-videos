@@ -10,6 +10,7 @@ export const Api = ({ apiUrl }: { apiUrl: string }): React.ReactElement => {
   const webcamScale = useStore((state) => state.config.webcamScale);
 
   const setFakedRecording = useStore((state) => state.setFakedRecording);
+  const setFakedRecordingPromise = useStore((state) => state.setFakedRecordingPromise);
 
   const [uiState, setUiState] = useState<
     | 'awaitingAudioSource'
@@ -56,21 +57,27 @@ export const Api = ({ apiUrl }: { apiUrl: string }): React.ReactElement => {
     formData.append('sound', audioSource);
     formData.append('webcamScale', webcamScale.toFixed(0));
 
-    try {
-      setUiState('awaitingResult');
-      const response = await fetch(apiUrl + '/three_videos_demo', {
-        method: 'POST',
-        body: formData,
-        mode: 'cors',
-      });
+    const fakedVideoPromise = new Promise<Blob>(async (resolve, reject) => {
+      try {
+        setUiState('awaitingResult');
+        const response = await fetch(apiUrl + '/three_videos_demo', {
+          method: 'POST',
+          body: formData,
+          mode: 'cors',
+        });
 
-      const video = await response.blob();
-      setUiState('success');
-      setFakedRecording(video);
-    } catch (error) {
-      setUiState('errorApi');
-      console.error(error);
-    }
+        const video = await response.blob();
+        setUiState('success');
+        setFakedRecording(video);
+        resolve(video);
+      } catch (error) {
+        setUiState('errorApi');
+        console.error(error);
+        reject(error);
+      }
+    });
+
+    setFakedRecordingPromise(fakedVideoPromise);
   };
 
   return (
