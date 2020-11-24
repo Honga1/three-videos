@@ -91,8 +91,8 @@ export const store = create<State>((set, get) => ({
 
   setPlaybackReadiness: (isReady: boolean) => set({ isPlaybackReady: isReady }),
   resetState: () => {
-    console.warn('Reset state');
-    set({ ...initialState });
+    const { config } = get();
+    set({ ...initialState, ...config });
   },
 }));
 
