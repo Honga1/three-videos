@@ -82,7 +82,10 @@ const getVideoRecorder = (stream: MediaStream): VideoRecorderResult => {
     videoChunks.push(event.data);
   });
 
-  const start = () => mediaRecorder.start();
+  const start = () => {
+    videoChunks.length = 0;
+    mediaRecorder.start();
+  };
 
   const stop = () =>
     new Promise<{ videoBlob: Blob; videoUrl: string }>((resolve) => {
