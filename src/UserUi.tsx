@@ -10,6 +10,7 @@ export const UserUi = (): ReactElement => {
   const isPermissionGranted = useStore((state) => !!state.streams);
   const stream = useStore((state) => state.streams?.video);
   const isPlaybackReady = useStore((state) => state.isPlaybackReady);
+  const recordingDuration = useStore((state) => state.config.recordingDuration);
 
   return (
     <>
@@ -18,7 +19,7 @@ export const UserUi = (): ReactElement => {
           {!isPermissionGranted && <Permissions />}
           {stream !== undefined && (
             <>
-              <VideoRecorder stream={stream} duration={1} />
+              <VideoRecorder stream={stream} duration={recordingDuration} />
               <VideoStreamPreview stream={stream} />
             </>
           )}

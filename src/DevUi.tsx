@@ -5,11 +5,14 @@ import { StaticVideoLoader } from './StaticFileLoader';
 import './DevUi.css';
 import { VideosReadyDev } from './VideosReadyDev';
 import { ApiUpTest } from './ApiUpTest';
+import { Config } from './Config';
+import { useStore } from './Store';
 
 export const DevUi = (): ReactElement => {
-  const apiUrl = process.env.API_URL || 'http://localhost:9000';
+  const apiUrl = useStore((state) => state.config.apiUrl);
   return (
     <div className="DevUi">
+      <Config />
       <StaticVideoLoader />
       <ApiUpTest apiUrl={apiUrl} />
       <Api apiUrl={apiUrl} />
