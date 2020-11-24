@@ -27,15 +27,26 @@ type State = {
   setStaticVideos: (start: Blob, middle: Blob, end: Blob) => void;
   setFakedRecording: (video: Blob) => void;
   setPlaybackReadiness: (isReady: boolean) => void;
+  resetState: () => void;
 };
 
-export const store = create<State>((set, get) => ({
+type CallbackFunctionVariadic = (...args: never[]) => void;
+type NonFunctionPropertyNames<T> = {
+  [K in keyof T]: T[K] extends CallbackFunctionVariadic ? never : K;
+}[keyof T];
+type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
+
+const initialState: NonFunctionProperties<State> = {
   streams: undefined,
   recordings: {},
   fakedRecording: undefined,
   staticVideos: undefined,
   isPlaybackReady: false,
   config: { recordingDuration: 3, apiUrl: 'http://localhost:9000' },
+};
+
+export const store = create<State>((set, get) => ({
+  ...initialState,
   setStreams: (streams: Streams) => {
     get().closeStreams();
     const { audio, video } = streams;
@@ -79,6 +90,10 @@ export const store = create<State>((set, get) => ({
   },
 
   setPlaybackReadiness: (isReady: boolean) => set({ isPlaybackReady: isReady }),
+  resetState: () => {
+    console.warn('Reset state');
+    set({ ...initialState });
+  },
 }));
 
 export const useStore = createStoreHook(store);
