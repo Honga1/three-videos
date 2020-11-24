@@ -17,6 +17,10 @@ type State = {
   recordings: { video?: Recording; audio?: Recording };
   fakedRecording: Blob | undefined;
   isPlaybackReady: boolean;
+  config: {
+    recordingDuration: number;
+    apiUrl: string;
+  };
   setStreams: (streams: Streams) => void;
   closeStreams: () => void;
   setVideoRecording: (recording: Recording) => void;
@@ -31,6 +35,7 @@ export const store = create<State>((set, get) => ({
   fakedRecording: undefined,
   staticVideos: undefined,
   isPlaybackReady: false,
+  config: { recordingDuration: 3, apiUrl: 'http://localhost:9000' },
   setStreams: (streams: Streams) => {
     get().closeStreams();
     const { audio, video } = streams;
