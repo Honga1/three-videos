@@ -5,11 +5,3 @@
   text-align: right;
   transition: transform 0.2s;
 }
-
-.Show {
-  transform: translate(0, 0);
-}
-
-.Hide {
-  transform: translate(0, 487px);
-}
