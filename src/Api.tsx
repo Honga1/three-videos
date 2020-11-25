@@ -54,7 +54,7 @@ export const Api = ({ apiUrl }: { apiUrl: string }): React.ReactElement => {
 
     const formData = new FormData();
     formData.append('image', destinationVideo.blob);
-    formData.append('sound', audioSource);
+    // formData.append('sound', audioSource);
     formData.append('webcamScale', webcamScale.toFixed(0));
 
     const fakedVideoPromise = new Promise<Blob>(async (resolve, reject) => {
