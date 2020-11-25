@@ -11,9 +11,15 @@ interface Streams {
   audio: MediaStream;
 }
 
+interface Files {
+  start: HTMLVideoElement;
+  middle: HTMLAudioElement;
+  end: HTMLVideoElement;
+}
+
 type State = {
   streams: Streams | undefined;
-  staticFiles: { start: Blob; middle: Blob; end: Blob } | undefined;
+  staticFiles: Files | undefined;
   recordings: { video?: Recording; audio?: Recording };
   fakedRecording: Blob | undefined;
   fakedRecordingPromise: Promise<Blob> | undefined;
@@ -26,7 +32,7 @@ type State = {
   setStreams: (streams: Streams) => void;
   closeStreams: () => void;
   setVideoRecording: (recording: Recording) => void;
-  setStaticFiles: (start: Blob, middle: Blob, end: Blob) => void;
+  setStaticFiles: ({ start, middle, end }: Files) => void;
   setFakedRecording: (video: Blob) => void;
   setFakedRecordingPromise: (videoPromise: Promise<Blob>) => void;
   setPlaybackReadiness: (isReady: boolean) => void;
@@ -90,7 +96,7 @@ export const store = create<State>((set, get) => ({
   setVideoRecording: (recording) => {
     set({ recordings: { video: recording } });
   },
-  setStaticFiles: (start, middle, end) => {
+  setStaticFiles: ({ start, middle, end }) => {
     set({ staticFiles: { start, middle, end } });
   },
   setFakedRecording: (video) => {

@@ -20,11 +20,11 @@ export const StaticVideoLoader = (): React.ReactElement => {
       setUiState('loading');
 
       try {
-        const start = await (await fetch(videoSrcStart)).blob();
-        const middle = await (await fetch(videoSrcMiddle)).blob();
-        const end = await (await fetch(videoSrcEnd)).blob();
+        const start = await loadVideo(videoSrcStart);
+        const middle = await loadAudio(videoSrcMiddle);
+        const end = await loadVideo(videoSrcEnd);
         setUiState('loaded');
-        setStaticFiles(start, middle, end);
+        setStaticFiles({ start, middle, end });
       } catch (error) {
         setUiState('error');
         console.error(error);
@@ -42,4 +42,30 @@ export const StaticVideoLoader = (): React.ReactElement => {
       {uiState === 'error' && <ErrorMessage reason="Files could not load" />}
     </div>
   );
+};
+
+const loadVideo = async (src: string) => {
+  return new Promise<HTMLVideoElement>((resolve, reject) => {
+    const video = document.createElement('video') as HTMLVideoElement;
+    video.src = src;
+    video.load();
+    video.onerror = (error) => reject(error);
+    video.oncanplaythrough = () => {
+      resolve(video);
+      video.oncanplaythrough = null;
+    };
+  });
+};
+
+const loadAudio = async (src: string) => {
+  return new Promise<HTMLAudioElement>((resolve, reject) => {
+    const audio = document.createElement('audio') as HTMLAudioElement;
+    audio.src = src;
+    audio.load();
+    audio.onerror = (error) => reject(error);
+    audio.oncanplaythrough = () => {
+      resolve(audio);
+      audio.oncanplaythrough = null;
+    };
+  });
 };

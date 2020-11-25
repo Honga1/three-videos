@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 type Props = {
-  start: Blob;
+  start: HTMLVideoElement;
   middle: Promise<Blob>;
-  end: Blob;
+  end: HTMLVideoElement;
 };
 
 const isVideoPlaying = (video: HTMLVideoElement) =>
@@ -10,28 +10,29 @@ const isVideoPlaying = (video: HTMLVideoElement) =>
 
 export const AsyncVideos = ({ start, middle, end }: Props): React.ReactElement => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [videos, setVideos] = useState<Promise<HTMLVideoElement>[]>([]);
-  const [size, setSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
+  const [videos, setVideos] = useState<
+    [HTMLVideoElement, Promise<HTMLVideoElement>, HTMLVideoElement] | undefined
+  >();
+
+  const size = {
+    width: start.videoWidth,
+    height: start.videoHeight,
+  };
+
   const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0);
 
   useEffect(() => {
     const effect = async () => {
-      const videoPromises = [start, middle, end].map(async (blob, index) => {
-        const isFirst = index === 0;
-        const setSizeCallback = isFirst
-          ? (video: HTMLVideoElement) =>
-              setSize({ width: video.videoWidth, height: video.videoHeight })
-          : () => ({});
-        return loadVideo(await blob, setSizeCallback);
-      });
-
-      setVideos(videoPromises);
+      const blob = await middle;
+      return loadVideo(blob);
     };
 
-    effect();
+    setVideos([start, effect(), end]);
   }, [end, middle, start]);
 
   useAnimationFrame(60, async () => {
+    if (videos === undefined) return;
+
     const currentVideo = await videos[currentVideoIndex];
     const context = canvasRef.current?.getContext('2d');
     if (currentVideo === undefined) return;
@@ -41,8 +42,9 @@ export const AsyncVideos = ({ start, middle, end }: Props): React.ReactElement =
   });
 
   useEffect(() => {
+    if (videos === undefined) return;
+
     const effect = async () => {
-      if (videos.length === 0) return;
       const currentVideo = await videos[currentVideoIndex];
       if (currentVideo === undefined)
         throw new Error(
@@ -69,14 +71,13 @@ export const AsyncVideos = ({ start, middle, end }: Props): React.ReactElement =
   return <canvas ref={canvasRef} width={size.width} height={size.height}></canvas>;
 };
 
-async function loadVideo(videoBlob: Blob, onMetaData: (video: HTMLVideoElement) => void) {
+async function loadVideo(videoBlob: Blob) {
   return new Promise<HTMLVideoElement>((resolve, reject) => {
     const video = document.createElement('video');
     video.src = URL.createObjectURL(videoBlob);
     video.load();
     video.onloadeddata = () => resolve(video);
     video.onerror = (error) => reject(error);
-    video.addEventListener('loadedmetadata', () => onMetaData(video));
   });
 }
 
