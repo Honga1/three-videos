@@ -39,6 +39,10 @@ type NonFunctionPropertyNames<T> = {
 }[keyof T];
 type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
+const apiUrl =
+  window.location.href[window.location.href.length - 1] === '/'
+    ? window.location.href.slice(0, -1)
+    : window.location.href;
 const initialState: NonFunctionProperties<State> = {
   streams: undefined,
   recordings: {},
@@ -46,7 +50,7 @@ const initialState: NonFunctionProperties<State> = {
   fakedRecordingPromise: undefined,
   staticFiles: undefined,
   isPlaybackReady: false,
-  config: { recordingDuration: 10, apiUrl: window.location.href, webcamScale: 2 },
+  config: { recordingDuration: 10, apiUrl, webcamScale: 2 },
 };
 
 export const store = create<State>((set, get) => ({
