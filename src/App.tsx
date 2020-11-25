@@ -6,7 +6,8 @@ import { useStore } from './Store';
 import { UserUi } from './UserUi';
 
 function App(): React.ReactElement {
-  const staticFiles = useStore((state) => state.staticFiles);
+  const startVideo = useStore((state) => state.staticFiles?.start);
+  const endVideo = useStore((state) => state.staticFiles?.end);
   const fakedRecordingPromise = useStore((state) => state.fakedRecordingPromise);
 
   return (
@@ -14,12 +15,8 @@ function App(): React.ReactElement {
       <div className="AppContents">
         <UserUi />
         <DevUi />
-        {!!staticFiles && !!fakedRecordingPromise && (
-          <AsyncVideos
-            start={staticFiles.start}
-            middle={fakedRecordingPromise}
-            end={staticFiles.end}
-          />
+        {!!startVideo && !!fakedRecordingPromise && !!endVideo && (
+          <AsyncVideos start={startVideo} middle={fakedRecordingPromise} end={endVideo} />
         )}
       </div>
     </div>
