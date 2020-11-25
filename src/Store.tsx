@@ -46,7 +46,7 @@ const initialState: NonFunctionProperties<State> = {
   fakedRecordingPromise: undefined,
   staticFiles: undefined,
   isPlaybackReady: false,
-  config: { recordingDuration: 10, apiUrl: 'http://localhost:9000', webcamScale: 2 },
+  config: { recordingDuration: 10, apiUrl: window.location.href, webcamScale: 2 },
 };
 
 export const store = create<State>((set, get) => ({
