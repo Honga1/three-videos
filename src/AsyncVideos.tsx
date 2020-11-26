@@ -68,7 +68,14 @@ export const AsyncVideos = ({ start, middle, end }: Props): React.ReactElement =
     };
   }, [currentVideoIndex, videos]);
 
-  return <canvas ref={canvasRef} width={size.width} height={size.height}></canvas>;
+  return (
+    <canvas
+      style={{ width: '100%' }}
+      ref={canvasRef}
+      width={size.width}
+      height={size.height}
+    ></canvas>
+  );
 };
 
 async function loadVideo(videoBlob: Blob) {
