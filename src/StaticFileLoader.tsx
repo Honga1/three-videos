@@ -2,10 +2,6 @@ import { useEffect, useState } from 'react';
 import { ErrorMessage, NeutralMessage, SuccessMessage } from './ui/Messages';
 import { useStore } from './Store';
 
-import videoSrcStart from './videos/1.mp4';
-import videoSrcMiddle from './videos/2.wav';
-import videoSrcEnd from './videos/3.mp4';
-
 export const StaticVideoLoader = (): React.ReactElement => {
   const isAlreadyLoaded = useStore((state) => !!state.staticFiles);
   const setStaticFiles = useStore((state) => state.setStaticFiles);
@@ -20,13 +16,14 @@ export const StaticVideoLoader = (): React.ReactElement => {
       setUiState('loading');
 
       try {
-        const start = await loadVideo(videoSrcStart);
-        const middle = await loadAudio(videoSrcMiddle);
-        const end = await loadVideo(videoSrcEnd);
+        const start = await loadVideo('videos/1.mp4');
+        const middle = await loadAudio('videos/2.wav');
+        const end = await loadVideo('videos/3.mp4');
         setUiState('loaded');
         setStaticFiles({ start, middle, end });
       } catch (error) {
         setUiState('error');
+        console.warn(`Could not load element ${error?.path[0]?.src}`);
         console.error(error);
       }
     };
@@ -49,7 +46,7 @@ const loadVideo = async (src: string) => {
     const video = document.createElement('video') as HTMLVideoElement;
     video.src = src;
     video.load();
-    video.onerror = (error) => reject(error);
+    video.onerror = (event) => reject(event);
     video.oncanplaythrough = () => {
       resolve(video);
       video.oncanplaythrough = null;
