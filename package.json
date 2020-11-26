@@ -2,7 +2,6 @@
   "name": "three-videos",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://honga1.github.io/three-videos",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -25,7 +24,7 @@
     "eject": "react-scripts eject",
     "eslint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" \"./backend/src/**/*.ts\"",
     "lint": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "predeploy": "npm run build",
+    "predeploy": "PUBLIC_URL=\"http://honga1.github.io/three-videos\" npm run build",
     "deploy": "gh-pages -d build"
   },
   "browserslist": {
