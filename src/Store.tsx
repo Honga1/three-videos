@@ -6,11 +6,6 @@ type Recording = {
   url: string;
 };
 
-interface Streams {
-  video: MediaStream;
-  audio: MediaStream;
-}
-
 interface Files {
   start: HTMLVideoElement;
   middle: HTMLAudioElement;
@@ -18,7 +13,8 @@ interface Files {
 }
 
 type State = {
-  streams: Streams | undefined;
+  audioStream: MediaStream | undefined;
+  videoStream: MediaStream | undefined;
   staticFiles: Files | undefined;
   recordings: { video?: Recording; audio?: Recording };
   fakedRecording: Blob | undefined;
@@ -29,7 +25,8 @@ type State = {
     apiUrl: string;
     webcamScale: number;
   };
-  setStreams: (streams: Streams) => void;
+  setVideoStream: (videoStream: MediaStream) => void;
+  setAudioStream: (audioStream: MediaStream) => void;
   closeStreams: () => void;
   setVideoRecording: (recording: Recording) => void;
   setStaticFiles: ({ start, middle, end }: Files) => void;
@@ -50,7 +47,8 @@ const apiUrl =
     ? window.location.href.slice(0, -1)
     : window.location.href;
 const initialState: NonFunctionProperties<State> = {
-  streams: undefined,
+  audioStream: undefined,
+  videoStream: undefined,
   recordings: {},
   fakedRecording: undefined,
   fakedRecordingPromise: undefined,
@@ -61,36 +59,46 @@ const initialState: NonFunctionProperties<State> = {
 
 export const store = create<State>((set, get) => ({
   ...initialState,
-  setStreams: (streams: Streams) => {
+
+  setAudioStream: (audioStream) => {
     get().closeStreams();
-    const { audio, video } = streams;
 
-    audio.getTracks().forEach((track) => {
+    audioStream.getTracks().forEach((track) => {
       track.addEventListener('ended', () => {
         get().closeStreams();
       });
     });
 
-    video.getTracks().forEach((track) => {
+    set({ audioStream });
+  },
+  setVideoStream: (videoStream) => {
+    get().closeStreams();
+
+    videoStream.getTracks().forEach((track) => {
       track.addEventListener('ended', () => {
         get().closeStreams();
       });
     });
 
-    set({ streams });
+    set({ videoStream });
   },
   closeStreams: () => {
-    const maybeStreams = get().streams;
-    if (maybeStreams) {
-      const { audio, video } = maybeStreams;
-      audio.getTracks().forEach((track) => {
-        track.stop();
-      });
-      video.getTracks().forEach((track) => {
+    const maybeAudio = get().audioStream;
+    const maybeVideo = get().videoStream;
+
+    if (maybeAudio) {
+      maybeAudio.getTracks().forEach((track) => {
         track.stop();
       });
     }
-    set({ streams: undefined });
+
+    if (maybeVideo) {
+      maybeVideo.getTracks().forEach((track) => {
+        track.stop();
+      });
+    }
+
+    set({ audioStream: undefined, videoStream: undefined });
   },
 
   setVideoRecording: (recording) => {

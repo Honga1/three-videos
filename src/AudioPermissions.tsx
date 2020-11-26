@@ -3,40 +3,31 @@ import { useStore } from './Store';
 import { ErrorMessage, PromptMessage } from './ui/Messages';
 import { Button } from './ui/Button';
 
-export const Permissions = (): React.ReactElement => {
-  const isUserStreamOn = useStore((state) => !!state.streams);
-  const setStreams = useStore((state) => state.setStreams);
+export const AudioPermissions = (): React.ReactElement => {
+  const isAudioStreamOn = useStore((state) => !!state.audioStream);
+  const setStreamsAudioStream = useStore((state) => state.setAudioStream);
 
   const [uiState, setUiState] = useState<
-    'prompt' | 'accepted' | 'errorVideo' | 'errorAudio' | 'errorDisconnected'
-  >(isUserStreamOn ? 'accepted' : 'prompt');
+    'prompt' | 'accepted' | 'errorAudio' | 'errorDisconnected'
+  >(isAudioStreamOn ? 'accepted' : 'prompt');
 
-  if (uiState === 'accepted') {
-  }
-
-  if (isUserStreamOn && uiState !== 'accepted') {
+  if (isAudioStreamOn && uiState !== 'accepted') {
     setUiState('accepted');
   }
 
-  if (!isUserStreamOn && uiState === 'accepted') {
+  if (!isAudioStreamOn && uiState === 'accepted') {
     setUiState('errorDisconnected');
   }
 
   const getStreams = async () => {
     const audio = await getAudioStream();
-    const video = await getVideoStream();
 
     if (!audio) {
       setUiState('errorAudio');
       return;
     }
 
-    if (!video) {
-      setUiState('errorVideo');
-      return;
-    }
-
-    setStreams({ audio, video });
+    setStreamsAudioStream(audio);
   };
 
   return (
@@ -47,11 +38,10 @@ export const Permissions = (): React.ReactElement => {
         }
       ></PromptMessage>
 
-      <Button onClick={getStreams}>Enable Webcam & Audio</Button>
+      <Button onClick={getStreams}>Enable Microphone</Button>
 
       {uiState === 'accepted' && <PromptMessage text={'Devices connected!'}></PromptMessage>}
       {uiState === 'errorAudio' && <ErrorMessage reason={'Could not get microphone.'} />}
-      {uiState === 'errorVideo' && <ErrorMessage reason={'Could not get webcam.'} />}
       {uiState === 'errorDisconnected' && <ErrorMessage reason={'Devices disconnected.'} />}
     </div>
   );
@@ -60,19 +50,6 @@ export const Permissions = (): React.ReactElement => {
 async function getAudioStream() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-    return stream;
-  } catch (error) {
-    console.error(error);
-    return undefined;
-  }
-}
-
-async function getVideoStream() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { width: 1280, height: 720, facingMode: 'user' },
-      audio: false,
-    });
     return stream;
   } catch (error) {
     console.error(error);

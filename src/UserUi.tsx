@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Permissions } from './Permissions';
+import { VideoPermissions } from './VideoPermissions';
 import { useStore } from './Store';
 import { VideoRecorder } from './VideoRecorder';
 import { VideoStreamPreview } from './ui/VideoStreamPreview';
@@ -7,8 +7,8 @@ import { VideoStreamPreview } from './ui/VideoStreamPreview';
 import './UserUi.css';
 
 export const UserUi = (): ReactElement => {
-  const isPermissionGranted = useStore((state) => !!state.streams);
-  const stream = useStore((state) => state.streams?.video);
+  const isVideoPermissionGranted = useStore((state) => !!state.videoStream);
+  const stream = useStore((state) => state.videoStream);
   const isPlaybackReady = useStore((state) => state.isPlaybackReady);
   const recordingDuration = useStore((state) => state.config.recordingDuration);
 
@@ -16,7 +16,7 @@ export const UserUi = (): ReactElement => {
     <>
       {!isPlaybackReady && (
         <div className="UserUi">
-          {!isPermissionGranted && <Permissions />}
+          {!isVideoPermissionGranted && <VideoPermissions />}
           {stream !== undefined && (
             <>
               <VideoRecorder stream={stream} duration={recordingDuration} />
