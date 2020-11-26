@@ -42,15 +42,15 @@ export const StaticVideoLoader = (): React.ReactElement => {
 };
 
 const loadVideo = async (src: string) => {
-  return new Promise<HTMLVideoElement>((resolve, reject) => {
+  return new Promise<HTMLVideoElement>(async (resolve, reject) => {
+    const blob = await (await fetch(src)).blob();
     const video = document.createElement('video') as HTMLVideoElement;
-    video.src = src;
-    video.load();
+    video.src = URL.createObjectURL(blob);
     video.onerror = (event) => reject(event);
-    video.oncanplaythrough = () => {
+    video.onloadeddata = () => {
       resolve(video);
-      video.oncanplaythrough = null;
     };
+    video.load();
   });
 };
 
