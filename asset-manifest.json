@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/three-videos/static/css/main.2d397a2b.chunk.css",
-    "main.js": "/three-videos/static/js/main.14984520.chunk.js",
-    "main.js.map": "/three-videos/static/js/main.14984520.chunk.js.map",
-    "runtime-main.js": "/three-videos/static/js/runtime-main.8041e6b6.js",
-    "runtime-main.js.map": "/three-videos/static/js/runtime-main.8041e6b6.js.map",
-    "static/js/2.8e4a3112.chunk.js": "/three-videos/static/js/2.8e4a3112.chunk.js",
-    "static/js/2.8e4a3112.chunk.js.map": "/three-videos/static/js/2.8e4a3112.chunk.js.map",
-    "static/js/3.4bc3839b.chunk.js": "/three-videos/static/js/3.4bc3839b.chunk.js",
-    "static/js/3.4bc3839b.chunk.js.map": "/three-videos/static/js/3.4bc3839b.chunk.js.map",
-    "index.html": "/three-videos/index.html",
-    "static/css/main.2d397a2b.chunk.css.map": "/three-videos/static/css/main.2d397a2b.chunk.css.map",
-    "static/js/2.8e4a3112.chunk.js.LICENSE.txt": "/three-videos/static/js/2.8e4a3112.chunk.js.LICENSE.txt"
+    "main.css": "http://honga1.github.io/three-videos/static/css/main.02abd98e.chunk.css",
+    "main.js": "http://honga1.github.io/three-videos/static/js/main.9851d18c.chunk.js",
+    "main.js.map": "http://honga1.github.io/three-videos/static/js/main.9851d18c.chunk.js.map",
+    "runtime-main.js": "http://honga1.github.io/three-videos/static/js/runtime-main.08208305.js",
+    "runtime-main.js.map": "http://honga1.github.io/three-videos/static/js/runtime-main.08208305.js.map",
+    "static/js/2.06f8a157.chunk.js": "http://honga1.github.io/three-videos/static/js/2.06f8a157.chunk.js",
+    "static/js/2.06f8a157.chunk.js.map": "http://honga1.github.io/three-videos/static/js/2.06f8a157.chunk.js.map",
+    "static/js/3.4bc3839b.chunk.js": "http://honga1.github.io/three-videos/static/js/3.4bc3839b.chunk.js",
+    "static/js/3.4bc3839b.chunk.js.map": "http://honga1.github.io/three-videos/static/js/3.4bc3839b.chunk.js.map",
+    "index.html": "http://honga1.github.io/three-videos/index.html",
+    "static/css/main.02abd98e.chunk.css.map": "http://honga1.github.io/three-videos/static/css/main.02abd98e.chunk.css.map",
+    "static/js/2.06f8a157.chunk.js.LICENSE.txt": "http://honga1.github.io/three-videos/static/js/2.06f8a157.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.8041e6b6.js",
-    "static/js/2.8e4a3112.chunk.js",
-    "static/css/main.2d397a2b.chunk.css",
-    "static/js/main.14984520.chunk.js"
+    "static/js/runtime-main.08208305.js",
+    "static/js/2.06f8a157.chunk.js",
+    "static/css/main.02abd98e.chunk.css",
+    "static/js/main.9851d18c.chunk.js"
   ]
 }
