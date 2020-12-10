@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 # Specify Dokku repo/server/app we need to push to
 DOKKU_REPO=dokku@138.197.223.251:three-videos
 
@@ -13,13 +13,13 @@ npm run build
 rm -rf package
 mkdir -p package
 mkdir -p package/frontend
-# mkdir -p package/backend
+mkdir -p package/backend
 cd package || exit
 
 # Dokku is basically a repo we need to push to
 # so here we create a one, add the files we need, and then push to Dokku
 git init
-# cp -R ../backend/* ./backend
+cp -R ../backend/* ./backend
 cp -R ../build/* ./frontend
 
 # Also need to install node_modules for server side stuff
