@@ -4,8 +4,7 @@
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
-    "express": "^4.17.1",
-    "express-http-proxy": "^1.6.2"
+    "express": "^4.17.1"
   },
   "scripts": {
     "watch:server-js": "cross-env NODE_ENV=development PWD=./ nodemon ./backend/dist/app.js",
