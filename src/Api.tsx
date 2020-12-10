@@ -3,7 +3,13 @@ import { Button } from './ui/Button';
 import { SuccessMessage, ErrorMessage, NeutralMessage, PromptMessage } from './ui/Messages';
 import { useStore } from './Store';
 
-export const Api = ({ apiUrl }: { apiUrl: string }): React.ReactElement => {
+export const Api = ({
+  apiUrl,
+  autoSubmit,
+}: {
+  apiUrl: string;
+  autoSubmit: boolean;
+}): React.ReactElement => {
   const audioSource = useStore((state) => state.staticFiles?.middle);
   const destinationVideo = useStore((state) => state.recordings?.video);
   const destinationImage = useStore((state) => state.recordings?.image);
@@ -47,13 +53,7 @@ export const Api = ({ apiUrl }: { apiUrl: string }): React.ReactElement => {
     | 'errorSources'
   >(reduceInitialState);
 
-  useEffect(() => {
-    const uiState = reduceInitialState();
-
-    setUiState(uiState);
-  }, [reduceInitialState]);
-
-  const sendToApi = async () => {
+  const sendToApi = useCallback(async () => {
     if (!audioSource) {
       console.error('Audio source not yet ready');
       setUiState('errorSources');
@@ -109,7 +109,27 @@ export const Api = ({ apiUrl }: { apiUrl: string }): React.ReactElement => {
     });
 
     setFakedRecordingPromise(fakedVideoPromise);
-  };
+  }, [
+    apiUrl,
+    audioSource,
+    destinationImage,
+    destinationVideo,
+    isPhotoMode,
+    setFakedRecording,
+    setFakedRecordingPromise,
+    webcamScale,
+  ]);
+
+  useEffect(() => {
+    const uiState = reduceInitialState();
+    setUiState(uiState);
+  }, [reduceInitialState]);
+
+  useEffect(() => {
+    if (uiState === 'prompt' && autoSubmit) {
+      sendToApi();
+    }
+  }, [autoSubmit, sendToApi, uiState]);
 
   return (
     <div className="Api">

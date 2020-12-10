@@ -1,5 +1,6 @@
 import create from 'zustand/vanilla';
 import createStoreHook from 'zustand';
+import { IChainableElement } from './ChainableComponent';
 
 type Recording = {
   blob: Blob;
@@ -16,6 +17,7 @@ type State = {
   isPhotoMode: boolean;
   audioStream: MediaStream | undefined;
   videoStream: MediaStream | undefined;
+  detectorVideo: IChainableElement | undefined;
   staticFiles: Files | undefined;
   recordings: { video?: Recording; audio?: Recording; image?: Recording };
   fakedRecording: Blob | undefined;
@@ -46,6 +48,7 @@ type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
 const apiUrl = 'https://three-videos-api.jaeperris.com';
 const initialState: NonFunctionProperties<State> = {
+  detectorVideo: undefined,
   isPhotoMode: true,
   audioStream: undefined,
   videoStream: undefined,

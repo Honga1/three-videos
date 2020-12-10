@@ -50,7 +50,7 @@ export const DevUi = (): ReactElement => {
       <Config />
       <StaticVideoLoader />
       <ApiUpTest apiUrl={apiUrl} />
-      <Api apiUrl={apiUrl} />
+      <Api autoSubmit={!isDevUiShowing} apiUrl={apiUrl} />
       <VideosReadyDev />
       <Button onClick={store.getState().resetState}>Reset State</Button>
     </div>
