@@ -13,8 +13,8 @@ export const DevUi = (): ReactElement => {
   const apiUrl = useStore((state) => state.config.apiUrl);
   const [isDevUiShowing, setDevUiShowing] = useState(true);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const noTranslation = `translate(0, 0)`;
-  const [menuTranslation, setMenuTranslation] = useState(noTranslation);
+  const menuUpStyle = { transform: `translate(0, 0)`, opacity: '1' };
+  const [menuDownStyle, setMenuDownStyle] = useState(menuUpStyle);
 
   const toggleUi = () => {
     setDevUiShowing(!isDevUiShowing);
@@ -22,14 +22,14 @@ export const DevUi = (): ReactElement => {
 
     if (isDevUiShowing && maybeBottom) {
       const menuTranslation = `translate(0, ${window.innerHeight - maybeBottom}px)`;
-      setMenuTranslation(menuTranslation);
+      setMenuDownStyle({ transform: menuTranslation, opacity: '0' });
     } else {
-      setMenuTranslation(noTranslation);
+      setMenuDownStyle(menuUpStyle);
     }
   };
 
   return (
-    <div style={{ transform: menuTranslation }} className={`DevUi`}>
+    <div style={menuDownStyle} className={`DevUi`}>
       <Button ref={buttonRef} onClick={toggleUi}>
         {isDevUiShowing ? 'Hide' : 'Show'}
       </Button>
