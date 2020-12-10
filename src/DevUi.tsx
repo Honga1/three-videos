@@ -8,6 +8,7 @@ import { ApiUpTest } from './ApiUpTest';
 import { Config } from './Config';
 import { store, useStore } from './Store';
 import { Button } from './ui/Button';
+import { ImageRecordedPreview } from './ui/ImageRecordedPreview';
 
 export const DevUi = (): ReactElement => {
   const apiUrl = useStore((state) => state.config.apiUrl);
@@ -17,6 +18,8 @@ export const DevUi = (): ReactElement => {
   const menuUpStyle = { transform: `translate(0, 0)`, opacity: '1' };
   const menuStartStyle = { transform: `translate(0, 0)`, opacity: '0' };
   const [menuDownStyle, setMenuDownStyle] = useState(menuStartStyle);
+
+  const maybeImageRecorded = useStore((state) => state.recordings.image?.url);
 
   useEffect(() => {
     const maybeBottom = buttonRef.current?.getBoundingClientRect().bottom;
@@ -43,6 +46,7 @@ export const DevUi = (): ReactElement => {
       <Button ref={buttonRef} onClick={toggleUi}>
         {isDevUiShowing ? 'Hide' : 'Show'}
       </Button>
+      {maybeImageRecorded && <ImageRecordedPreview imageUrl={maybeImageRecorded} />}
       <Config />
       <StaticVideoLoader />
       <ApiUpTest apiUrl={apiUrl} />

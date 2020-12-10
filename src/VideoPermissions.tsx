@@ -37,7 +37,7 @@ export const VideoPermissions = (): React.ReactElement => {
     <div className="Permissions">
       <PromptMessage
         text={
-          'This is an interactive documentary. The interaction is provided via your microphone and webcam. Please enable this now.'
+          'This is an interactive documentary. The interaction is provided via your webcam. Please enable this now.'
         }
       ></PromptMessage>
 

@@ -13,10 +13,11 @@ interface Files {
 }
 
 type State = {
+  isPhotoMode: boolean;
   audioStream: MediaStream | undefined;
   videoStream: MediaStream | undefined;
   staticFiles: Files | undefined;
-  recordings: { video?: Recording; audio?: Recording };
+  recordings: { video?: Recording; audio?: Recording; image?: Recording };
   fakedRecording: Blob | undefined;
   fakedRecordingPromise: Promise<Blob> | undefined;
   isPlaybackReady: boolean;
@@ -29,6 +30,7 @@ type State = {
   setAudioStream: (audioStream: MediaStream) => void;
   closeStreams: () => void;
   setVideoRecording: (recording: Recording) => void;
+  setImageRecording: (recording: Recording) => void;
   setStaticFiles: ({ start, middle, end }: Files) => void;
   setFakedRecording: (video: Blob) => void;
   setFakedRecordingPromise: (videoPromise: Promise<Blob>) => void;
@@ -44,6 +46,7 @@ type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
 const apiUrl = 'https://three-videos-api.jaeperris.com';
 const initialState: NonFunctionProperties<State> = {
+  isPhotoMode: true,
   audioStream: undefined,
   videoStream: undefined,
   recordings: {},
@@ -101,6 +104,11 @@ export const store = create<State>((set, get) => ({
   setVideoRecording: (recording) => {
     set({ recordings: { video: recording } });
   },
+
+  setImageRecording: (recording) => {
+    set({ recordings: { image: recording } });
+  },
+
   setStaticFiles: ({ start, middle, end }) => {
     set({ staticFiles: { start, middle, end } });
   },
