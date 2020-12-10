@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { Api } from './Api';
 import { StaticVideoLoader } from './StaticFileLoader';
 
@@ -11,10 +11,20 @@ import { Button } from './ui/Button';
 
 export const DevUi = (): ReactElement => {
   const apiUrl = useStore((state) => state.config.apiUrl);
-  const [isDevUiShowing, setDevUiShowing] = useState(true);
+  // TODO: Fix potential logic bug with maybe states always triggering a swap in view status. Likely out of scope for today's demo
+  const [isDevUiShowing, setDevUiShowing] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuUpStyle = { transform: `translate(0, 0)`, opacity: '1' };
-  const [menuDownStyle, setMenuDownStyle] = useState(menuUpStyle);
+  const menuStartStyle = { transform: `translate(0, 0)`, opacity: '0' };
+  const [menuDownStyle, setMenuDownStyle] = useState(menuStartStyle);
+
+  useEffect(() => {
+    const maybeBottom = buttonRef.current?.getBoundingClientRect().bottom;
+    if (maybeBottom) {
+      const menuTranslation = `translate(0, ${window.innerHeight - maybeBottom}px)`;
+      setMenuDownStyle({ transform: menuTranslation, opacity: '0' });
+    }
+  }, []);
 
   const toggleUi = () => {
     setDevUiShowing(!isDevUiShowing);
