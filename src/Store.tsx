@@ -42,10 +42,7 @@ type NonFunctionPropertyNames<T> = {
 }[keyof T];
 type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
-const apiUrl =
-  window.location.href[window.location.href.length - 1] === '/'
-    ? window.location.href.slice(0, -1)
-    : window.location.href;
+const apiUrl = 'https://three-videos-api.jaeperris.com';
 const initialState: NonFunctionProperties<State> = {
   audioStream: undefined,
   videoStream: undefined,
