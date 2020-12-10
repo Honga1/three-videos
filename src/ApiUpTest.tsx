@@ -16,9 +16,6 @@ export const ApiUpTest = ({ apiUrl }: { apiUrl: string }): React.ReactElement =>
   const testApi = useCallback(async () => {
     try {
       const response = await fetch(apiUrl + '/three_videos_is_up', {
-        method: 'POST',
-        mode: 'cors',
-        body: new FormData(),
         signal,
       }).then(fetchStatusHandler);
       const file = await response.blob();
