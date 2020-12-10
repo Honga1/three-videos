@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ErrorMessage, NeutralMessage, SuccessMessage } from './ui/Messages';
 import { useStore } from './Store';
+import videoStart from './videos/1.mp4';
+import videoMiddle from './videos/2.wav';
+import videoEnd from './videos/3.mp4';
 
 export const StaticVideoLoader = (): React.ReactElement => {
   const isAlreadyLoaded = useStore((state) => !!state.staticFiles);
@@ -16,9 +19,9 @@ export const StaticVideoLoader = (): React.ReactElement => {
       setUiState('loading');
 
       try {
-        const start = await loadVideo('videos/1.mp4');
-        const middle = await loadAudio('videos/2.wav');
-        const end = await loadVideo('videos/3.mp4');
+        const start = await loadVideo(videoStart);
+        const middle = await loadAudio(videoMiddle);
+        const end = await loadVideo(videoEnd);
         setUiState('loaded');
         setStaticFiles({ start, middle, end });
       } catch (error) {
@@ -43,9 +46,8 @@ export const StaticVideoLoader = (): React.ReactElement => {
 
 const loadVideo = async (src: string) => {
   return new Promise<HTMLVideoElement>(async (resolve, reject) => {
-    const blob = await (await fetch(src)).blob();
     const video = document.createElement('video') as HTMLVideoElement;
-    video.src = URL.createObjectURL(blob);
+    video.src = src;
     video.onerror = (event) => reject(event);
     video.onloadeddata = () => {
       resolve(video);
