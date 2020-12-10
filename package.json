@@ -4,11 +4,8 @@
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
-    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-http-proxy": "^1.6.2",
-    "express-sslify": "^1.2.0",
-    "request": "^2.88.2"
+    "express-http-proxy": "^1.6.2"
   },
   "scripts": {
     "watch:server-js": "cross-env NODE_ENV=development PWD=./ nodemon ./backend/dist/app.js",
@@ -47,19 +44,12 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@types/cors": "^2.8.8",
     "@types/dom-mediacapture-record": "^1.0.7",
     "@types/express": "^4.17.9",
     "@types/express-http-proxy": "^1.6.1",
-    "@types/express-sslify": "^1.2.1",
-    "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
-    "@types/request": "^2.48.5",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "concurrently": "^5.3.0",
