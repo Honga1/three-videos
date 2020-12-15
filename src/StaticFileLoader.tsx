@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { ErrorMessage, NeutralMessage, SuccessMessage } from './ui/Messages';
 import { useStore } from './Store';
-import videoStart from './videos/1-short.mp4';
+import videoStart from './videos/1.mp4';
 import soundStart from './videos/1-sound.wav';
 import soundEnd from './videos/2-sound.wav';
-import videoEnd from './videos/3-short.mp4';
+import videoEnd from './videos/3.mp4';
 
 export const StaticFileLoader = (): React.ReactElement => {
   const isAlreadyLoaded = useStore((state) => !!state.staticFiles);
