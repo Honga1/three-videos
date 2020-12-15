@@ -32,3 +32,27 @@ class ChainableCanvas implements IChainableElement {
 export function canvasToChainable(canvas: HTMLCanvasElement, duration: number): IChainableElement {
   return new ChainableCanvas(duration, canvas);
 }
+
+export const graphicToChainable = (
+  canvas: HTMLCanvasElement,
+  audio: HTMLAudioElement,
+): IChainableElement => {
+  const chainableGraphic: IChainableElement = {
+    start: () => audio.play(),
+    canvasImageSource: canvas,
+    width: () => canvas.width,
+    height: () => canvas.height,
+    isEnded: () => false,
+    pause: () => false,
+    onEnded: undefined,
+    isPlaying: () =>
+      !!(audio.currentTime > 0 && !audio.paused && !audio.ended && audio.readyState > 2),
+  };
+
+  audio.addEventListener('ended', () => {
+    chainableGraphic.isEnded = () => true;
+    chainableGraphic.onEnded?.();
+  });
+
+  return chainableGraphic;
+};
