@@ -18,7 +18,7 @@ export const VideoDetector = ({ stream }: { stream: MediaStream }): ReactElement
     });
   }, [stream]);
 
-  useAnimationFrameAsync(60, async () => {
+  useAnimationFrameAsync(25, async () => {
     const video = ref.current;
     if (video === null || hasLoadedData.current === false) return;
     video.width = stream.getTracks()[0]!.getSettings().width!;
