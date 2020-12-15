@@ -23,6 +23,8 @@ type State = {
   fakedRecording: Blob | undefined;
   fakedRecordingPromise: Promise<Blob> | undefined;
   isPlaybackReady: boolean;
+  isTracking: boolean;
+  currentPlaybackTrack: undefined | number;
   config: {
     recordingDuration: number;
     apiUrl: string;
@@ -38,6 +40,8 @@ type State = {
   setFakedRecordingPromise: (videoPromise: Promise<Blob>) => void;
   setPlaybackReadiness: (isReady: boolean) => void;
   resetState: () => void;
+  setPlaybackTrack: (track: number) => void;
+  setIsTracking: (tracking: boolean) => void;
 };
 
 type CallbackFunctionVariadic = (...args: never[]) => void;
@@ -57,6 +61,8 @@ const initialState: NonFunctionProperties<State> = {
   fakedRecordingPromise: undefined,
   staticFiles: undefined,
   isPlaybackReady: false,
+  isTracking: false,
+  currentPlaybackTrack: undefined,
   config: { recordingDuration: 4, apiUrl, webcamScale: 2 },
 };
 
@@ -128,6 +134,9 @@ export const store = create<State>((set, get) => ({
     const config = { ...get().config };
     set({ ...initialState, config: { ...config } });
   },
+
+  setPlaybackTrack: (track: number) => set({ currentPlaybackTrack: track }),
+  setIsTracking: (isTracking: boolean) => set({ isTracking }),
 }));
 
 export const useStore = createStoreHook(store);

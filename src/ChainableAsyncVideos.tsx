@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IChainableElement } from './ChainableComponent';
-import { FaceTracker } from './face-tracker/FaceTracker';
+import { useStore } from './Store';
 type Props = {
   start: IChainableElement;
   tracking: IChainableElement;
@@ -28,6 +28,7 @@ export const ChainableAsyncVideos = ({
   };
 
   const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0);
+  const setPlaybackTrack = useStore((state) => state.setPlaybackTrack);
 
   useEffect(() => {
     const effect = async () => {
@@ -43,6 +44,13 @@ export const ChainableAsyncVideos = ({
     const currentVideo = await videos[currentVideoIndex];
     const context = canvasRef.current?.getContext('2d');
     if (currentVideo === undefined) return;
+
+    if (!isVideoPlaying(currentVideo) && currentVideo.isReady() && !currentVideo.isEnded()) {
+      currentVideo.start();
+    }
+    if (currentVideo.isReady() === false) {
+      return;
+    }
     if (context === undefined || context === null) return;
 
     if (currentVideoIndex === 1) {
@@ -60,11 +68,10 @@ export const ChainableAsyncVideos = ({
         throw new Error(
           `currentVideoIndex out of range. Got ${currentVideoIndex}, expected between 0 and ${videos.length}`,
         );
-      currentVideo.onEnded = () => setCurrentVideoIndex((currentVideoIndex + 1) % videos.length);
-      if (!isVideoPlaying(currentVideo)) {
-        console.log(`playing video ${currentVideoIndex}`);
-        currentVideo.start();
-      }
+      currentVideo.onEnded = () => {
+        setPlaybackTrack((currentVideoIndex + 1) % videos.length);
+        setCurrentVideoIndex((currentVideoIndex + 1) % videos.length);
+      };
 
       return () => {
         currentVideo.pause();
@@ -102,6 +109,7 @@ async function loadVideo(videoBlob: Blob) {
       onEnded: undefined,
       isPlaying: () =>
         !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2),
+      isReady: () => true,
     };
 
     video.addEventListener('ended', () => {

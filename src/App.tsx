@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { ChainableAsyncVideos } from './ChainableAsyncVideos';
-import { graphicToChainable } from './ChainableCanvas';
+import { graphicToChainablePromise } from './ChainableCanvas';
 import { videoToChainable } from './ChainableComponent';
 import { DevUi } from './DevUi';
 import { FaceTracker } from './face-tracker/FaceTracker';
@@ -26,7 +26,7 @@ function App(): React.ReactElement {
         {!!startVideo && !!fakedRecordingPromise && !!endVideo && detectorCanvas && startAudio && (
           <ChainableAsyncVideos
             start={videoToChainable(startVideo)}
-            tracking={graphicToChainable(detectorCanvas, startAudio)}
+            tracking={graphicToChainablePromise(detectorCanvas, startAudio)}
             middle={fakedRecordingPromise}
             end={videoToChainable(endVideo)}
           />
