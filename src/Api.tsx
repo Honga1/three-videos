@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from './ui/Button';
 import { SuccessMessage, ErrorMessage, NeutralMessage, PromptMessage } from './ui/Messages';
 import { useStore } from './Store';
+import shortVideo from './videos/2-short.mp4';
 
 export const Api = ({
   apiUrl,
@@ -10,7 +11,7 @@ export const Api = ({
   apiUrl: string;
   autoSubmit: boolean;
 }): React.ReactElement => {
-  const audioSource = useStore((state) => state.staticFiles?.middle);
+  const audioSource = useStore((state) => state.staticFiles?.soundOne);
   const destinationVideo = useStore((state) => state.recordings?.video);
   const destinationImage = useStore((state) => state.recordings?.image);
   const resultVideo = useStore((state) => state.fakedRecording);
@@ -85,11 +86,17 @@ export const Api = ({
     const fakedVideoPromise = new Promise<Blob>(async (resolve, reject) => {
       try {
         setUiState('awaitingResult');
-        const response = await fetch(apiUrl + '/three_videos_demo', {
-          method: 'POST',
-          body: formData,
-          mode: 'cors',
+        // const response = await fetch(apiUrl + '/three_videos_demo', {
+        //   method: 'POST',
+        //   body: formData,
+        //   mode: 'cors',
+        // });
+        const response = await fetch(shortVideo, {
+          // method: 'POST',
+          // body: formData,
+          // mode: 'cors',
         });
+
         const video = await response.blob();
 
         if (video.type !== 'video/mp4') {

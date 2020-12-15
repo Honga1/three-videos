@@ -9,7 +9,8 @@ type Recording = {
 
 interface Files {
   start: HTMLVideoElement;
-  middle: HTMLAudioElement;
+  soundOne: HTMLAudioElement;
+  soundTwo: HTMLAudioElement;
   end: HTMLVideoElement;
 }
 
@@ -112,8 +113,8 @@ export const store = create<State>((set, get) => ({
     set({ recordings: { image: recording } });
   },
 
-  setStaticFiles: ({ start, middle, end }) => {
-    set({ staticFiles: { start, middle, end } });
+  setStaticFiles: ({ start, soundOne, soundTwo, end }) => {
+    set({ staticFiles: { start, soundOne, soundTwo, end } });
   },
   setFakedRecording: (video) => {
     set({ fakedRecording: video });

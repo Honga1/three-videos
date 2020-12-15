@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { Api } from './Api';
-import { StaticVideoLoader } from './StaticFileLoader';
+import { StaticFileLoader } from './StaticFileLoader';
 
 import './DevUi.css';
 import { VideosReadyDev } from './VideosReadyDev';
@@ -48,7 +48,7 @@ export const DevUi = (): ReactElement => {
       </Button>
       {maybeImageRecorded && <ImageRecordedPreview imageUrl={maybeImageRecorded} />}
       <Config />
-      <StaticVideoLoader />
+      <StaticFileLoader />
       <ApiUpTest apiUrl={apiUrl} />
       <Api autoSubmit={!isDevUiShowing} apiUrl={apiUrl} />
       <VideosReadyDev />
