@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { IChainableElement } from './ChainableComponent';
+import { IChainableElement, videoToChainable } from './ChainableComponent';
 import { useStore } from './Store';
 type Props = {
   start: IChainableElement;
@@ -45,9 +45,6 @@ export const ChainableAsyncVideos = ({
     const context = canvasRef.current?.getContext('2d');
     if (currentVideo === undefined) return;
 
-    if (!isVideoPlaying(currentVideo) && currentVideo.isReady() && !currentVideo.isEnded()) {
-      currentVideo.start();
-    }
     if (currentVideo.isReady() === false) {
       return;
     }
@@ -72,6 +69,11 @@ export const ChainableAsyncVideos = ({
         setPlaybackTrack((currentVideoIndex + 1) % videos.length);
         setCurrentVideoIndex((currentVideoIndex + 1) % videos.length);
       };
+
+      if (!currentVideo.isPlaying()) {
+        console.log(`playing video ${currentVideoIndex}`);
+        currentVideo.playWhenReady();
+      }
 
       return () => {
         currentVideo.pause();
@@ -99,23 +101,7 @@ async function loadVideo(videoBlob: Blob) {
   return new Promise<IChainableElement>((resolve, reject) => {
     const video = document.createElement('video');
 
-    const chainableVideo: IChainableElement = {
-      start: () => video.play(),
-      canvasImageSource: video,
-      width: () => video.videoWidth,
-      height: () => video.videoHeight,
-      isEnded: () => false,
-      pause: () => false,
-      onEnded: undefined,
-      isPlaying: () =>
-        !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2),
-      isReady: () => true,
-    };
-
-    video.addEventListener('ended', () => {
-      chainableVideo.isEnded = () => true;
-      chainableVideo.onEnded?.();
-    });
+    const chainableVideo = videoToChainable(video);
 
     video.src = URL.createObjectURL(videoBlob);
     video.load();

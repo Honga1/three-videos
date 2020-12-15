@@ -1,5 +1,5 @@
 export type IChainableElement = {
-  start: () => void;
+  playWhenReady: () => void;
   pause: () => void;
   isEnded: () => boolean;
   isPlaying: () => boolean;
@@ -12,7 +12,7 @@ export type IChainableElement = {
 
 export const videoToChainable = (video: HTMLVideoElement): IChainableElement => {
   const chainableVideo: IChainableElement = {
-    start: () => video.play(),
+    playWhenReady: () => video.play(),
     canvasImageSource: video,
     width: () => video.videoWidth,
     height: () => video.videoHeight,
@@ -23,6 +23,10 @@ export const videoToChainable = (video: HTMLVideoElement): IChainableElement => 
       !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2),
     isReady: () => true,
   };
+
+  video.addEventListener('play', () => {
+    chainableVideo.isEnded = () => false;
+  });
 
   video.addEventListener('ended', () => {
     chainableVideo.isEnded = () => true;

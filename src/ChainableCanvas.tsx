@@ -5,8 +5,11 @@ export const graphicToChainablePromise = (
   canvas: HTMLCanvasElement,
   audio: HTMLAudioElement,
 ): IChainableElement => {
+  let cued = false;
   const chainableGraphic: IChainableElement = {
-    start: () => audio.play(),
+    playWhenReady: () => {
+      cued = true;
+    },
     canvasImageSource: canvas,
     width: () => canvas.width,
     height: () => canvas.height,
@@ -22,9 +25,12 @@ export const graphicToChainablePromise = (
     chainableGraphic.isEnded = () => true;
     chainableGraphic.onEnded?.();
   });
+
   store.subscribe(
     (isTracking: boolean) => {
       chainableGraphic.isReady = () => isTracking;
+      if (cued && !chainableGraphic.isPlaying()) audio.play();
+      cued = false;
     },
     (state) => state.isTracking,
   );
