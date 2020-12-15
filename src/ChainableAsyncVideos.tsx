@@ -45,9 +45,10 @@ export const ChainableAsyncVideos = ({
     if (currentVideo === undefined) return;
     if (context === undefined || context === null) return;
 
-    if (currentVideoIndex !== 1) {
-      context.drawImage(currentVideo.canvasImageSource, 0, 0, size.width, size.height);
+    if (currentVideoIndex === 1) {
+      context.clearRect(0, 0, size.width, size.height);
     }
+    context.drawImage(currentVideo.canvasImageSource, 0, 0, size.width, size.height);
   });
 
   useEffect(() => {
