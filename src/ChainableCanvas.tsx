@@ -18,7 +18,7 @@ export const graphicToChainablePromise = (
     onEnded: undefined,
     isPlaying: () =>
       !!(audio.currentTime > 0 && !audio.paused && !audio.ended && audio.readyState > 2),
-    isReady: () => false,
+    isReady: () => store.getState().isTracking,
   };
 
   audio.addEventListener('ended', () => {
