@@ -29,7 +29,7 @@ export const FaceTracker = ({ stream }: Props): ReactElement => {
     });
   });
 
-  useAnimationFrame(60, () => {
+  useAnimationFrame(25, () => {
     const maybeCanvas = ref.current?.getElementsByTagName('canvas')[0];
     const maybeVideo = videoRef.current;
 
