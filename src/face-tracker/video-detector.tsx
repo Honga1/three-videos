@@ -28,7 +28,7 @@ export const VideoDetector = forwardRef<HTMLVideoElement, { stream: MediaStream 
     const videoRef = useForwardedRef(ref);
 
     const hasLoadedData = useRef(false);
-    const enabled = useStore((state) => true);
+    const enabled = useStore((state) => state.currentPlaybackTrack === 1);
 
     useEffect(() => {
       const video = videoRef.current;
