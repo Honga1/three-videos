@@ -21,6 +21,8 @@ export const FaceTracker = ({ stream }: Props): ReactElement => {
 
     if (!maybeCanvas || !maybeVideo) return;
 
+    bothDrawn.current.width = 1920;
+    bothDrawn.current.height = 1080;
     bothDrawn.current.width = maybeCanvas.width;
     bothDrawn.current.height = maybeCanvas.height;
 
@@ -34,6 +36,8 @@ export const FaceTracker = ({ stream }: Props): ReactElement => {
     const maybeVideo = videoRef.current;
 
     if (!maybeCanvas || !maybeVideo) return;
+    bothDrawn.current.width = maybeCanvas.width;
+    bothDrawn.current.height = maybeCanvas.height;
     const context = bothDrawn.current.getContext('2d')!;
     const aspect = maybeVideo.videoWidth / maybeVideo.videoHeight;
     const offsetX = (maybeCanvas.width - maybeCanvas.height / aspect) / 2;
