@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IChainableElement, videoToChainable } from './ChainableComponent';
+import { store } from './face-tracker/store';
 import { useStore } from './Store';
 type Props = {
   start: IChainableElement;
@@ -39,7 +40,7 @@ export const ChainableAsyncVideos = ({
     setVideos([start, tracking, effect(), end]);
   }, [end, middle, start, tracking]);
 
-  useAnimationFrame(60, async () => {
+  useAnimationFrame(30, async () => {
     if (videos === undefined) return;
     const currentVideo = await videos[currentVideoIndex];
     const context = canvasRef.current?.getContext('2d');
@@ -53,7 +54,25 @@ export const ChainableAsyncVideos = ({
     if (currentVideoIndex === 1) {
       context.clearRect(0, 0, size.width, size.height);
     }
-    context.drawImage(currentVideo.canvasImageSource, 0, 0, size.width, size.height);
+
+    if (currentVideoIndex === 2) {
+      const maybeVideo = store.getState().video;
+      if (!maybeVideo) {
+        context.drawImage(currentVideo.canvasImageSource, 0, 0, size.width, size.height);
+      } else {
+        const aspect = maybeVideo.source.videoWidth / maybeVideo.source.videoHeight;
+        const offsetX = (size.width - size.height / aspect) / 2;
+        context.drawImage(
+          currentVideo.canvasImageSource,
+          offsetX,
+          0,
+          size.height / aspect,
+          size.height,
+        );
+      }
+    } else {
+      context.drawImage(currentVideo.canvasImageSource, 0, 0, size.width, size.height);
+    }
   });
 
   useEffect(() => {
@@ -85,7 +104,7 @@ export const ChainableAsyncVideos = ({
     return () => {
       pauseVideo.then((pause) => pause?.());
     };
-  }, [currentVideoIndex, videos]);
+  }, [currentVideoIndex, setPlaybackTrack, videos]);
 
   return (
     <canvas
