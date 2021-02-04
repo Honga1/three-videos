@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IChainableElement, videoToChainable } from './ChainableComponent';
-import { store } from './face-tracker/store';
-import { useStore } from './Store';
+import { store, useStore } from './Store';
 type Props = {
   start: IChainableElement;
   tracking: IChainableElement;
@@ -56,18 +55,30 @@ export const ChainableAsyncVideos = ({
     }
 
     if (currentVideoIndex === 2) {
-      const maybeVideo = store.getState().video;
-      if (!maybeVideo) {
-        context.drawImage(currentVideo.canvasImageSource, 0, 0, size.width, size.height);
+      const video = store.getState().videoStream?.getTracks()[0]?.getSettings();
+      if (video === undefined) return;
+
+      const aspect = video.width! / video.height!;
+      if (aspect < 1.777) {
+        // Should pad sides
+        const offsetX = (size.width - size.height * aspect) / 2;
+
+        const offsetY = 0;
+        context.clearRect(0, 0, size.width, size.height);
+        const width = size.width - offsetX * 2;
+        const height = size.height - offsetY * 2;
+        context.drawImage(currentVideo.canvasImageSource, offsetX, offsetY, width, height);
       } else {
-        const aspect = maybeVideo.source.videoWidth / maybeVideo.source.videoHeight;
-        const offsetX = (size.width - size.height / aspect) / 2;
+        // Should pad tops
+        const offsetX = 0;
+        const offsetY = (size.height - size.width / aspect) / 2;
+        context.clearRect(0, 0, size.width, size.height);
         context.drawImage(
           currentVideo.canvasImageSource,
           offsetX,
-          0,
-          size.height / aspect,
-          size.height,
+          offsetY,
+          size.width - offsetX * 2,
+          size.height - offsetY * 2,
         );
       }
     } else {

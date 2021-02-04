@@ -4,7 +4,7 @@ import { ChainableAsyncVideos } from './ChainableAsyncVideos';
 import { graphicToChainablePromise } from './ChainableCanvas';
 import { videoToChainable } from './ChainableComponent';
 import { DevUi } from './DevUi';
-import { FaceTracker } from './face-tracker/FaceTracker';
+import { BlazeFace } from './face-tracker/BlazeFace';
 import { useStore } from './Store';
 import { UserUi } from './UserUi';
 
@@ -16,10 +16,12 @@ function App(): React.ReactElement {
   const stream = useStore((state) => state.videoStream);
   const detectorCanvas = useStore((state) => state.detectorCanvas);
 
+  console.log(stream);
   return (
     <div className="App">
       <div className="AppContents">
-        {stream && <FaceTracker stream={stream} />}
+        {/* {!stream && <VideoPermissions />} */}
+        {stream && <BlazeFace stream={stream} />}
         <UserUi />
         <DevUi />
 
