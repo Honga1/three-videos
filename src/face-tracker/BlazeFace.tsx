@@ -47,6 +47,7 @@ export const BlazeFace = ({ stream }: { stream: MediaStream }): ReactElement => 
         };
       });
       modelRef.current = await blazeface.load({ maxFaces: 1 });
+      const predictions = await modelRef.current.estimateFaces(video, false, true, true);
     };
 
     effect();
@@ -69,6 +70,9 @@ export const BlazeFace = ({ stream }: { stream: MediaStream }): ReactElement => 
 
   const isTracking = () => store.getState().isTracking;
   useAnimationFrame(30, async () => {
+    const enabled = store.getState().currentPlaybackTrack === 1;
+    if (!enabled) return;
+
     if (!isTracking()) store.getState().setIsTracking(true);
     if (
       !videoRef.current ||
@@ -118,6 +122,9 @@ export const BlazeFace = ({ stream }: { stream: MediaStream }): ReactElement => 
   });
 
   useAnimationFrame(30, async () => {
+    const enabled = store.getState().currentPlaybackTrack === 1;
+    if (!enabled) return;
+
     const canvasContainer = document.getElementById('CanvasPoints') as HTMLDivElement | null;
 
     if (!videoRef.current || !canvasContainer || !bothDrawnRef.current) return;
