@@ -1,22 +1,20 @@
 {
   "files": {
-    "main.css": "http://honga1.github.io/three-videos/static/css/main.02abd98e.chunk.css",
-    "main.js": "http://honga1.github.io/three-videos/static/js/main.9851d18c.chunk.js",
-    "main.js.map": "http://honga1.github.io/three-videos/static/js/main.9851d18c.chunk.js.map",
-    "runtime-main.js": "http://honga1.github.io/three-videos/static/js/runtime-main.08208305.js",
-    "runtime-main.js.map": "http://honga1.github.io/three-videos/static/js/runtime-main.08208305.js.map",
-    "static/js/2.06f8a157.chunk.js": "http://honga1.github.io/three-videos/static/js/2.06f8a157.chunk.js",
-    "static/js/2.06f8a157.chunk.js.map": "http://honga1.github.io/three-videos/static/js/2.06f8a157.chunk.js.map",
-    "static/js/3.4bc3839b.chunk.js": "http://honga1.github.io/three-videos/static/js/3.4bc3839b.chunk.js",
-    "static/js/3.4bc3839b.chunk.js.map": "http://honga1.github.io/three-videos/static/js/3.4bc3839b.chunk.js.map",
-    "index.html": "http://honga1.github.io/three-videos/index.html",
-    "static/css/main.02abd98e.chunk.css.map": "http://honga1.github.io/three-videos/static/css/main.02abd98e.chunk.css.map",
-    "static/js/2.06f8a157.chunk.js.LICENSE.txt": "http://honga1.github.io/three-videos/static/js/2.06f8a157.chunk.js.LICENSE.txt"
+    "main.css": "/three-videos/static/css/main.c92a43ea.chunk.css",
+    "main.js": "/three-videos/static/js/main.e0898c25.chunk.js",
+    "runtime-main.js": "/three-videos/static/js/runtime-main.55cb0049.js",
+    "static/js/2.a62f02ba.chunk.js": "/three-videos/static/js/2.a62f02ba.chunk.js",
+    "index.html": "/three-videos/index.html",
+    "static/js/2.a62f02ba.chunk.js.LICENSE.txt": "/three-videos/static/js/2.a62f02ba.chunk.js.LICENSE.txt",
+    "static/media/1-sound.9a7498fb.mp3": "/three-videos/static/media/1-sound.9a7498fb.mp3",
+    "static/media/1.8387f5c7.mp4": "/three-videos/static/media/1.8387f5c7.mp4",
+    "static/media/2-sound.a491b656.mp3": "/three-videos/static/media/2-sound.a491b656.mp3",
+    "static/media/3.40b0841d.mp4": "/three-videos/static/media/3.40b0841d.mp4"
   },
   "entrypoints": [
-    "static/js/runtime-main.08208305.js",
-    "static/js/2.06f8a157.chunk.js",
-    "static/css/main.02abd98e.chunk.css",
-    "static/js/main.9851d18c.chunk.js"
+    "static/js/runtime-main.55cb0049.js",
+    "static/js/2.a62f02ba.chunk.js",
+    "static/css/main.c92a43ea.chunk.css",
+    "static/js/main.e0898c25.chunk.js"
   ]
 }
